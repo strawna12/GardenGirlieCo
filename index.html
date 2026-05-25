@@ -801,13 +801,13 @@
 
   .cta-banner .btn-primary { font-size: 1.05rem; padding: 16px 36px; }
 
-  /* ── CONTACT ── */
+  /* ── CONTACT / INTAKE ── */
   #contact { background: var(--cream); }
 
   .contact-wrap {
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 80px;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 72px;
     align-items: start;
   }
 
@@ -822,7 +822,7 @@
     font-size: 0.95rem;
     color: var(--text-muted);
     line-height: 1.7;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
     font-weight: 300;
   }
 
@@ -830,7 +830,7 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     font-size: 0.9rem;
   }
 
@@ -848,90 +848,359 @@
   .contact-detail strong { display: block; font-weight: 600; font-size: 0.85rem; }
   .contact-detail span { color: var(--text-muted); font-weight: 300; }
 
-  .contact-form {
+  /* ── INTAKE WIZARD (embedded) ── */
+  .intake-wizard {
     background: var(--white);
     border-radius: 32px;
-    padding: 48px 40px;
-    box-shadow: 0 8px 40px var(--shadow);
+    box-shadow: 0 8px 48px var(--shadow);
+    overflow: hidden;
   }
 
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .wizard-progress {
+    background: linear-gradient(135deg, var(--sage-deep), #3d6b35);
+    padding: 24px 32px 20px;
+  }
 
-  .form-group {
+  .wizard-step-labels {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .wiz-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    flex: 1;
+    opacity: 0.45;
+    transition: opacity 0.3s;
+    cursor: pointer;
+  }
+
+  .wiz-step.active { opacity: 1; }
+  .wiz-step.done { opacity: 0.75; }
+
+  .wiz-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+    color: white;
+    transition: background 0.3s, border-color 0.3s, transform 0.2s;
+  }
+
+  .wiz-step.active .wiz-dot {
+    background: var(--coral);
+    border-color: var(--coral);
+    transform: scale(1.1);
+    box-shadow: 0 2px 10px rgba(240,135,106,0.5);
+  }
+
+  .wiz-step.done .wiz-dot {
+    background: rgba(255,255,255,0.25);
+    border-color: rgba(255,255,255,0.5);
+  }
+
+  .wiz-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .wiz-line {
+    flex: 0 0 20px;
+    height: 1px;
+    background: rgba(255,255,255,0.25);
+    margin-bottom: 18px;
+  }
+
+  .wizard-body { padding: 32px 36px 36px; }
+
+  /* Wizard step panels */
+  .wiz-panel { display: none; animation: wizIn 0.35s ease; }
+  .wiz-panel.active { display: block; }
+
+  @keyframes wizIn {
+    from { opacity: 0; transform: translateX(16px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .wiz-panel h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .wiz-panel > p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* Shared form field styles (scoped to wizard) */
+  .wiz-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .wiz-group {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
-  .form-group label {
-    font-size: 0.85rem;
+  .wiz-group:last-of-type { margin-bottom: 0; }
+
+  .wiz-group label {
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--text);
   }
 
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
+  .wiz-group input,
+  .wiz-group select,
+  .wiz-group textarea {
     background: var(--cream);
     border: 1.5px solid rgba(143,175,133,0.25);
-    border-radius: 14px;
-    padding: 13px 16px;
+    border-radius: 12px;
+    padding: 11px 14px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     color: var(--text);
     outline: none;
-    transition: border-color 0.2s, background 0.2s;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
     width: 100%;
   }
 
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
+  .wiz-group input:focus,
+  .wiz-group select:focus,
+  .wiz-group textarea:focus {
     border-color: var(--sage);
     background: var(--white);
+    box-shadow: 0 0 0 3px rgba(143,175,133,0.12);
   }
 
-  .form-group textarea { resize: vertical; min-height: 100px; }
+  .wiz-group textarea { resize: vertical; min-height: 80px; }
+  .wiz-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237A5C4E' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
 
-  .file-upload {
+  /* Check / radio items in wizard */
+  .wiz-check-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .wiz-check {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--cream);
+    border: 1.5px solid rgba(143,175,133,0.2);
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    font-size: 0.84rem;
+  }
+
+  .wiz-check:hover { border-color: var(--sage-light); background: var(--blush-light); }
+  .wiz-check.on { background: #e4f0df; border-color: var(--sage); }
+  .wiz-check input { display: none; }
+
+  .wiz-checkbox {
+    width: 18px; height: 18px;
+    border: 2px solid var(--sage-light);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .wiz-check.on .wiz-checkbox {
+    background: var(--sage-deep);
+    border-color: var(--sage-deep);
+    color: white;
+  }
+
+  .wiz-radio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .wiz-radio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: var(--cream);
+    border: 2px solid rgba(143,175,133,0.2);
+    border-radius: 14px;
+    padding: 14px 10px;
+    cursor: pointer;
+    text-align: center;
+    user-select: none;
+    transition: all 0.2s;
+  }
+
+  .wiz-radio:hover { border-color: var(--sage-light); transform: translateY(-2px); }
+  .wiz-radio.on { background: #e4f0df; border-color: var(--sage-deep); box-shadow: 0 4px 12px rgba(95,128,84,0.15); }
+  .wiz-radio input { display: none; }
+  .wiz-radio .r-ico { font-size: 1.5rem; }
+  .wiz-radio .r-lbl { font-size: 0.78rem; font-weight: 600; color: var(--text); }
+  .wiz-radio .r-sub { font-size: 0.7rem; color: var(--text-muted); font-weight: 300; }
+
+  /* File upload in wizard */
+  .wiz-upload {
     background: var(--blush-light);
     border: 2px dashed var(--blush-deep);
     border-radius: 14px;
     padding: 24px;
     text-align: center;
     cursor: pointer;
-    transition: background 0.2s, border-color 0.2s;
+    transition: all 0.2s;
+    margin-bottom: 16px;
   }
 
-  .file-upload:hover { background: var(--blush); border-color: var(--coral); }
+  .wiz-upload:hover { background: var(--blush); border-color: var(--coral); }
+  .wiz-upload .u-icon { font-size: 1.8rem; margin-bottom: 8px; }
+  .wiz-upload h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; }
+  .wiz-upload p { font-size: 0.78rem; color: var(--text-muted); font-weight: 300; line-height: 1.5; }
+  .wiz-upload input { display: none; }
+  .file-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; justify-content: center; }
+  .file-chip { background: var(--white); border: 1px solid var(--sage-light); border-radius: 6px; padding: 3px 10px; font-size: 0.75rem; color: var(--sage-deep); font-weight: 500; }
 
-  .file-upload p {
+  /* Wizard nav buttons */
+  .wizard-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 24px;
+    gap: 12px;
+  }
+
+  .wiz-back {
+    background: transparent;
+    border: 1.5px solid var(--sage-light);
+    color: var(--sage-deep);
+    padding: 11px 22px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
     font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: all 0.2s;
+  }
+
+  .wiz-back:hover { background: var(--sage-light); }
+
+  .wiz-next {
+    background: var(--sage-deep);
+    border: none;
+    color: var(--white);
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 14px rgba(95,128,84,0.28);
+  }
+
+  .wiz-next:hover { background: var(--brown); transform: translateY(-1px); }
+
+  .wiz-submit {
+    background: var(--coral);
+    border: none;
+    color: var(--white);
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 14px rgba(240,135,106,0.35);
+  }
+
+  .wiz-submit:hover { background: var(--brown); transform: translateY(-1px); }
+
+  .wiz-counter { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
+
+  /* Success panel */
+  .wiz-success {
+    display: none;
+    text-align: center;
+    padding: 48px 32px;
+    animation: wizIn 0.4s ease;
+  }
+
+  .wiz-success .big-ico { font-size: 4rem; margin-bottom: 16px; display: block; }
+
+  .wiz-success h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .wiz-success h3 em { font-style: italic; color: var(--coral); }
+
+  .wiz-success p {
+    font-size: 0.9rem;
     color: var(--text-muted);
-    margin-top: 8px;
+    max-width: 360px;
+    margin: 0 auto 24px;
+    line-height: 1.7;
     font-weight: 300;
   }
 
-  .form-submit {
-    width: 100%;
-    background: var(--sage-deep);
-    color: var(--white);
-    border: none;
-    padding: 16px;
-    border-radius: 50px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+  .wiz-next-steps {
+    background: var(--cream);
+    border-radius: 18px;
+    padding: 20px 24px;
+    text-align: left;
+    margin-bottom: 24px;
   }
 
-  .form-submit:hover { background: var(--brown); transform: translateY(-2px); }
+  .wiz-next-step-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--blush-light);
+    font-size: 0.85rem;
+  }
+
+  .wiz-next-step-row:last-child { border-bottom: none; }
+  .wiz-next-step-row .ns-ico { font-size: 1.1rem; flex-shrink: 0; }
+  .wiz-next-step-row strong { display: block; font-weight: 600; font-size: 0.83rem; }
+  .wiz-next-step-row span { font-size: 0.78rem; color: var(--text-muted); font-weight: 300; }
 
   /* ── FOOTER ── */
   footer {
@@ -1074,7 +1343,11 @@
     .testimonials-grid { grid-template-columns: 1fr; }
 
     .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
-    .form-row { grid-template-columns: 1fr; }
+    .wiz-row { grid-template-columns: 1fr; }
+    .wizard-body { padding: 24px 20px 28px; }
+    .wizard-progress { padding: 18px 20px 16px; }
+    .wiz-label { display: none; }
+    .wiz-line { flex: 0 0 12px; }
 
     .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
     .footer-brand { grid-column: 1 / -1; }
@@ -1102,6 +1375,7 @@
     <li><a href="#airbnb">Airbnb</a></li>
     <li><a href="#consultations">Consultations</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="/education">🌿 Learn</a></li>
     <li><a href="#contact" class="nav-cta">Book a Consult</a></li>
   </ul>
 </nav>
@@ -1483,6 +1757,64 @@
   </div>
 </section>
 
+<!-- EDUCATION HUB TEASER -->
+<section id="education" style="background: linear-gradient(160deg, #3d5e33 0%, var(--sage-deep) 100%); color: var(--white); padding: 80px 48px;">
+  <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;">
+    <div>
+      <div style="display:inline-block; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); border-radius:50px; padding:7px 18px; font-size:0.78rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--butter); margin-bottom:20px;">📚 Free Resource</div>
+      <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:700; line-height:1.2; margin-bottom:16px;">Florida-Friendly<br><em style="color:var(--butter);">Gardening 101</em></h2>
+      <p style="font-size:1rem; line-height:1.7; font-weight:300; opacity:0.85; margin-bottom:32px; max-width:480px;">Real talk for real Florida gardeners. Our free education hub covers everything from pesticide-free pest control and composting to pollinators, native plants, water-wise tips, and more — all written for our unique Florida climate.</p>
+      <a href="/education" style="display:inline-flex; align-items:center; gap:10px; background:var(--butter); color:var(--brown); padding:14px 28px; border-radius:50px; text-decoration:none; font-weight:600; font-size:0.95rem; transition:all 0.2s; box-shadow:0 4px 16px rgba(0,0,0,0.2);" onmouseover="this.style.background='#fff';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--butter)';this.style.transform='translateY(0)'">
+        Explore the Education Hub →
+      </a>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+      <a href="/education#pesticides" style="text-decoration:none;">
+        <div style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:18px; padding:20px 16px; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(0)'">
+          <div style="font-size:1.6rem; margin-bottom:8px;">🐛</div>
+          <div style="font-size:0.88rem; font-weight:600; color:white; margin-bottom:4px;">Pesticide Alternatives</div>
+          <div style="font-size:0.78rem; opacity:0.7; font-weight:300;">Neem oil, soap spray, beneficial insects & more</div>
+        </div>
+      </a>
+      <a href="/education#worms" style="text-decoration:none;">
+        <div style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:18px; padding:20px 16px; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(0)'">
+          <div style="font-size:1.6rem; margin-bottom:8px;">🪱</div>
+          <div style="font-size:0.88rem; font-weight:600; color:white; margin-bottom:4px;">Worm Composting</div>
+          <div style="font-size:0.78rem; opacity:0.7; font-weight:300;">Turn kitchen scraps into garden gold</div>
+        </div>
+      </a>
+      <a href="/education#pollinators" style="text-decoration:none;">
+        <div style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:18px; padding:20px 16px; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(0)'">
+          <div style="font-size:1.6rem; margin-bottom:8px;">🦋</div>
+          <div style="font-size:0.88rem; font-weight:600; color:white; margin-bottom:4px;">Pollinator Basics</div>
+          <div style="font-size:0.78rem; opacity:0.7; font-weight:300;">315+ FL bee species & what they love</div>
+        </div>
+      </a>
+      <a href="/education#natives" style="text-decoration:none;">
+        <div style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:18px; padding:20px 16px; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(0)'">
+          <div style="font-size:1.6rem; margin-bottom:8px;">🌺</div>
+          <div style="font-size:0.88rem; font-weight:600; color:white; margin-bottom:4px;">Florida Native Plants</div>
+          <div style="font-size:0.78rem; opacity:0.7; font-weight:300;">Why they win & which ones to plant</div>
+        </div>
+      </a>
+      <a href="/education#composting" style="text-decoration:none;">
+        <div style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:18px; padding:20px 16px; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.transform='translateY(0)'">
+          <div style="font-size:1.6rem; margin-bottom:8px;">♻️</div>
+          <div style="font-size:0.88rem; font-weight:600; color:white; margin-bottom:4px;">Composting in FL</div>
+          <div style="font-size:0.78rem; opacity:0.7; font-weight:300;">Florida's heat = composting superpower</div>
+        </div>
+      </a>
+      <a href="/education" style="text-decoration:none;">
+        <div style="background:var(--butter); border-radius:18px; padding:20px 16px; transition:all 0.2s; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;" onmouseover="this.style.background='white';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='var(--butter)';this.style.transform='translateY(0)'">
+          <div style="font-size:1.6rem; margin-bottom:8px;">📖</div>
+          <div style="font-size:0.88rem; font-weight:700; color:var(--brown);">+ 5 more topics</div>
+          <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">View all →</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- CTA BANNER -->
 <div class="cta-banner">
   <h2>Ready for your garden glow-up? 🌺</h2>
@@ -1490,13 +1822,19 @@
   <a href="#contact" class="btn-primary">🌿 Book a Free Consult</a>
 </div>
 
-<!-- CONTACT -->
+<!-- CONTACT / INTAKE -->
 <section id="contact">
+  <div class="section-header center" style="margin-bottom:52px;">
+    <div class="section-tag">📬 Book a Consult</div>
+    <h2 class="section-title">Let's talk about your <em>space</em></h2>
+    <p class="section-sub">Tell us everything — the more details you share, the better we can match you with the perfect plants and services for your Florida home.</p>
+  </div>
   <div class="contact-wrap">
+
+    <!-- LEFT: info sidebar -->
     <div class="contact-info">
-      <div class="section-tag">📬 Get in Touch</div>
-      <h3>Let's talk about your space 🌸</h3>
-      <p>Fill out the form and we'll be in touch within 24 hours to chat about your garden goals, answer questions, and schedule your consultation. No pushy sales stuff — just plant talk.</p>
+      <h3>We're so excited to meet you 🌸</h3>
+      <p>Fill out the quick intake form and we'll be in touch within 24 hours to chat about your garden goals. No pushy sales stuff — just plant talk.</p>
       <div class="contact-detail">
         <div class="icon">📍</div>
         <div>
@@ -1525,68 +1863,373 @@
           <span>Within 24 hours, usually much faster!</span>
         </div>
       </div>
+
+      <!-- What to expect -->
+      <div style="margin-top:32px; background:var(--blush-light); border-radius:20px; padding:24px 20px;">
+        <p style="font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; margin-bottom:16px;">What happens next? 🌿</p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:28px;height:28px;background:var(--sage-deep);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:0.75rem;font-weight:700;flex-shrink:0;">1</div>
+            <div style="font-size:0.85rem;padding-top:4px;"><strong style="display:block;font-size:0.83rem;">You fill out this form</strong><span style="color:var(--text-muted);font-weight:300;">Takes about 3–5 minutes</span></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:28px;height:28px;background:var(--sage-deep);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:0.75rem;font-weight:700;flex-shrink:0;">2</div>
+            <div style="font-size:0.85rem;padding-top:4px;"><strong style="display:block;font-size:0.83rem;">We review & reach out</strong><span style="color:var(--text-muted);font-weight:300;">Within 24 hours to schedule</span></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:28px;height:28px;background:var(--sage-deep);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:0.75rem;font-weight:700;flex-shrink:0;">3</div>
+            <div style="font-size:0.85rem;padding-top:4px;"><strong style="display:block;font-size:0.83rem;">You get a custom plant plan</strong><span style="color:var(--text-muted);font-weight:300;">Tailored to your space & vibe</span></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="contact-form">
-      <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 28px; font-weight: 700;">Book Your Garden Consult ✨</h3>
-      <div class="form-row">
-        <div class="form-group">
-          <label>First Name</label>
-          <input type="text" placeholder="Your name">
-        </div>
-        <div class="form-group">
-          <label>Last Name</label>
-          <input type="text" placeholder="Last name">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" placeholder="you@email.com">
-        </div>
-        <div class="form-group">
-          <label>Phone Number</label>
-          <input type="tel" placeholder="(727) 555-0000">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Zip Code / Location</label>
-          <input type="text" placeholder="33701">
-        </div>
-        <div class="form-group">
-          <label>Type of Service</label>
-          <select>
-            <option value="">Select a service...</option>
-            <option>Container Gardening</option>
-            <option>Garden Maintenance & Care</option>
-            <option>Airbnb Outdoor Styling</option>
-            <option>Patio / Small Yard Design</option>
-            <option>Plant Consultation</option>
-            <option>Vacation Watering</option>
-            <option>Indoor Plant Care</option>
-            <option>Plant Shopping Help</option>
-            <option>Seasonal Refresh</option>
-            <option>Pollinator Garden</option>
-            <option>Rental Glow-Up</option>
-            <option>Not sure — help me figure it out!</option>
-          </select>
+
+    <!-- RIGHT: embedded 5-step wizard -->
+    <div class="intake-wizard">
+
+      <!-- Progress bar header -->
+      <div class="wizard-progress">
+        <div class="wizard-step-labels">
+          <div class="wiz-step active" id="wp1" onclick="wizGo(1)">
+            <div class="wiz-dot">👤</div>
+            <span class="wiz-label">About You</span>
+          </div>
+          <div class="wiz-line"></div>
+          <div class="wiz-step" id="wp2" onclick="wizGo(2)">
+            <div class="wiz-dot">🏡</div>
+            <span class="wiz-label">Your Space</span>
+          </div>
+          <div class="wiz-line"></div>
+          <div class="wiz-step" id="wp3" onclick="wizGo(3)">
+            <div class="wiz-dot">🌿</div>
+            <span class="wiz-label">Plant Life</span>
+          </div>
+          <div class="wiz-line"></div>
+          <div class="wiz-step" id="wp4" onclick="wizGo(4)">
+            <div class="wiz-dot">✨</div>
+            <span class="wiz-label">Services</span>
+          </div>
+          <div class="wiz-line"></div>
+          <div class="wiz-step" id="wp5" onclick="wizGo(5)">
+            <div class="wiz-dot">📸</div>
+            <span class="wiz-label">Photos</span>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <label>Tell us about your space & goals 🌱</label>
-        <textarea placeholder="Describe your space: sunlight situation, approximate size, what you're hoping for, any specific plants you love (or hate!). The more detail, the better we can help!"></textarea>
-      </div>
-      <div class="form-group">
-        <label>Upload photos of your space (optional)</label>
-        <div class="file-upload" onclick="this.querySelector('input').click()">
-          <div style="font-size: 2rem;">📷</div>
-          <p>Click to upload photos of your patio, yard, or space.<br>JPG, PNG, HEIC accepted · Up to 5 photos</p>
-          <input type="file" multiple accept="image/*" style="display:none">
+
+      <div class="wizard-body">
+
+        <!-- PANEL 1: About You -->
+        <div class="wiz-panel active" id="wiz1">
+          <h3>👋 Nice to meet you!</h3>
+          <p>Let's start with the basics so we can reach out and get your consult scheduled.</p>
+          <div class="wiz-row">
+            <div class="wiz-group">
+              <label>First Name</label>
+              <input type="text" placeholder="Your first name">
+            </div>
+            <div class="wiz-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Your last name">
+            </div>
+          </div>
+          <div class="wiz-row">
+            <div class="wiz-group">
+              <label>Email Address</label>
+              <input type="email" placeholder="you@email.com">
+            </div>
+            <div class="wiz-group">
+              <label>Phone Number</label>
+              <input type="tel" placeholder="(727) 555-0000">
+            </div>
+          </div>
+          <div class="wiz-row">
+            <div class="wiz-group">
+              <label>City</label>
+              <input type="text" placeholder="St. Petersburg">
+            </div>
+            <div class="wiz-group">
+              <label>Zip Code</label>
+              <input type="text" placeholder="33701">
+            </div>
+          </div>
+          <div class="wiz-group">
+            <label>How did you hear about us?</label>
+            <select>
+              <option value="">Select one...</option>
+              <option>Instagram</option>
+              <option>Facebook</option>
+              <option>TikTok</option>
+              <option>Google Search</option>
+              <option>Friend or family referral</option>
+              <option>Nextdoor</option>
+              <option>Airbnb community</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="wizard-nav">
+            <span class="wiz-counter">Step 1 of 5</span>
+            <button class="wiz-next" onclick="wizGo(2)">Next: Your Space →</button>
+          </div>
         </div>
-      </div>
-      <button class="form-submit" type="submit">🌿 Send My Consult Request</button>
-    </div>
-  </div>
+
+        <!-- PANEL 2: Your Space -->
+        <div class="wiz-panel" id="wiz2">
+          <h3>🏡 Tell us about your space</h3>
+          <p>Every garden is different — help us understand what we're working with!</p>
+
+          <div class="wiz-group" style="margin-bottom:16px;">
+            <label>Property type</label>
+            <div class="wiz-radio-grid">
+              <label class="wiz-radio" onclick="wizRadio(this,'ptype')"><input type="radio" name="ptype"><span class="r-ico">🏡</span><span class="r-lbl">Single Family</span></label>
+              <label class="wiz-radio" onclick="wizRadio(this,'ptype')"><input type="radio" name="ptype"><span class="r-ico">🏢</span><span class="r-lbl">Condo / Apt</span></label>
+              <label class="wiz-radio" onclick="wizRadio(this,'ptype')"><input type="radio" name="ptype"><span class="r-ico">🏘️</span><span class="r-lbl">Townhouse</span></label>
+              <label class="wiz-radio" onclick="wizRadio(this,'ptype')"><input type="radio" name="ptype"><span class="r-ico">🛎️</span><span class="r-lbl">Airbnb / STR</span></label>
+            </div>
+          </div>
+
+          <div class="wiz-row">
+            <div class="wiz-group">
+              <label>Do you own or rent?</label>
+              <select>
+                <option value="">Select...</option>
+                <option>I own my home</option>
+                <option>I rent — landlord is flexible</option>
+                <option>I rent — no permanent changes</option>
+                <option>Short-term rental I manage</option>
+              </select>
+            </div>
+            <div class="wiz-group">
+              <label>Outdoor space size</label>
+              <select>
+                <option value="">Select...</option>
+                <option>Tiny (balcony / under 100 sq ft)</option>
+                <option>Small (100–300 sq ft)</option>
+                <option>Medium (300–600 sq ft)</option>
+                <option>Large (600–1000 sq ft)</option>
+                <option>Very large (1000+ sq ft)</option>
+                <option>Not sure!</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="wiz-group" style="margin-bottom:16px;">
+            <label>Which areas do you want to address?</label>
+            <div class="wiz-check-grid" style="margin-top:8px;">
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>Front yard</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>Back yard</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>Patio / lanai</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>Balcony</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>Pool area</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>Indoor spaces</span></label>
+            </div>
+          </div>
+
+          <div class="wiz-row">
+            <div class="wiz-group">
+              <label>Sun exposure</label>
+              <select>
+                <option value="">Select...</option>
+                <option>Full sun (6+ hrs/day)</option>
+                <option>Partial sun (3–6 hrs)</option>
+                <option>Partial shade (1–3 hrs)</option>
+                <option>Full shade</option>
+                <option>Mixed / varies</option>
+                <option>Not sure!</option>
+              </select>
+            </div>
+            <div class="wiz-group">
+              <label>Irrigation system?</label>
+              <select>
+                <option value="">Select...</option>
+                <option>Yes — full system</option>
+                <option>Yes — partial</option>
+                <option>No — I hand water</option>
+                <option>No irrigation 😅</option>
+                <option>Not sure</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="wizard-nav">
+            <button class="wiz-back" onclick="wizGo(1)">← Back</button>
+            <span class="wiz-counter">Step 2 of 5</span>
+            <button class="wiz-next" onclick="wizGo(3)">Next: Plant Life →</button>
+          </div>
+        </div>
+
+        <!-- PANEL 3: Plant Life -->
+        <div class="wiz-panel" id="wiz3">
+          <h3>🌿 Let's talk plant life</h3>
+          <p>No judgment on experience level — we love a total beginner just as much as a plant obsessive!</p>
+
+          <div class="wiz-group" style="margin-bottom:16px;">
+            <label>Your gardening experience</label>
+            <div class="wiz-radio-grid">
+              <label class="wiz-radio" onclick="wizRadio(this,'xp')"><input type="radio" name="xp"><span class="r-ico">🪴</span><span class="r-lbl">Beginner</span><span class="r-sub">Killed cacti</span></label>
+              <label class="wiz-radio" onclick="wizRadio(this,'xp')"><input type="radio" name="xp"><span class="r-ico">🌱</span><span class="r-lbl">Some XP</span><span class="r-sub">Hit & miss</span></label>
+              <label class="wiz-radio" onclick="wizRadio(this,'xp')"><input type="radio" name="xp"><span class="r-ico">🌿</span><span class="r-lbl">Comfortable</span><span class="r-sub">Some wins!</span></label>
+              <label class="wiz-radio" onclick="wizRadio(this,'xp')"><input type="radio" name="xp"><span class="r-ico">🌺</span><span class="r-lbl">Enthusiast</span><span class="r-sub">Just need help</span></label>
+            </div>
+          </div>
+
+          <div class="wiz-group" style="margin-bottom:16px;">
+            <label>Your aesthetic vibe <span style="font-weight:300;color:var(--text-muted);font-size:0.78rem;">(check all that fit)</span></label>
+            <div class="wiz-check-grid" style="margin-top:8px;">
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🌸 Cottagecore</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🌴 Tropical lush</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🪨 Minimalist zen</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🌻 Colorful & bold</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🦋 Pollinator garden</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🏖️ Coastal / beachy</span></label>
+            </div>
+          </div>
+
+          <div class="wiz-row">
+            <div class="wiz-group">
+              <label>Pets at home?</label>
+              <select>
+                <option value="">Select...</option>
+                <option>No pets</option>
+                <option>Dogs</option>
+                <option>Cats</option>
+                <option>Dogs & cats</option>
+                <option>Other pets</option>
+              </select>
+            </div>
+            <div class="wiz-group">
+              <label>Watering honestly…</label>
+              <select>
+                <option value="">Select...</option>
+                <option>I forget often — drought-tolerant please!</option>
+                <option>Once a week is realistic</option>
+                <option>A few times a week, sure</option>
+                <option>I actually love watering</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="wiz-group">
+            <label>Plants you love or hate? <span style="font-weight:300;color:var(--text-muted);font-size:0.78rem;">(optional)</span></label>
+            <textarea placeholder="e.g. 'Love bougainvillea, hate anything super spiky! I'd love pinks and corals...'"></textarea>
+          </div>
+
+          <div class="wizard-nav">
+            <button class="wiz-back" onclick="wizGo(2)">← Back</button>
+            <span class="wiz-counter">Step 3 of 5</span>
+            <button class="wiz-next" onclick="wizGo(4)">Next: Services →</button>
+          </div>
+        </div>
+
+        <!-- PANEL 4: Services -->
+        <div class="wiz-panel" id="wiz4">
+          <h3>✨ What can we do for you?</h3>
+          <p>Select everything you're curious about — no commitment yet!</p>
+
+          <div class="wiz-group" style="margin-bottom:16px;">
+            <label>Services I'm interested in</label>
+            <div class="wiz-check-grid" style="margin-top:8px;">
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🪴 Container gardening</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>✂️ Garden maintenance</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🏡 Airbnb styling</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🌿 Yard / patio design</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🌞 Plant recommendations</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>💧 Vacation watering</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🌱 Indoor plant care</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🛒 Plant shopping help</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🍂 Seasonal refresh</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🦋 Pollinator garden</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🏠 Rental glow-up</span></label>
+              <label class="wiz-check" onclick="wizCheck(this)"><input type="checkbox"><div class="wiz-checkbox">✓</div><span>🎓 Teach me!</span></label>
+            </div>
+          </div>
+
+          <div class="wiz-row">
+            <div class="wiz-group">
+              <label>When to get started?</label>
+              <select>
+                <option value="">Select...</option>
+                <option>ASAP — I'm ready!</option>
+                <option>Within 2–4 weeks</option>
+                <option>Next 1–2 months</option>
+                <option>Just exploring</option>
+              </select>
+            </div>
+            <div class="wiz-group">
+              <label>Rough budget range</label>
+              <select>
+                <option value="">Select...</option>
+                <option>Under $200</option>
+                <option>$200 – $500</option>
+                <option>$500 – $1,000</option>
+                <option>$1,000 – $2,500</option>
+                <option>$2,500+</option>
+                <option>Need guidance!</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="wiz-group">
+            <label>Tell us your #1 goal 🌱</label>
+            <textarea placeholder="Dream big! e.g. 'I want my patio to feel like a little tropical escape — cozy, lush, but easy to keep up...'"></textarea>
+          </div>
+
+          <div class="wizard-nav">
+            <button class="wiz-back" onclick="wizGo(3)">← Back</button>
+            <span class="wiz-counter">Step 4 of 5</span>
+            <button class="wiz-next" onclick="wizGo(5)">Next: Photos →</button>
+          </div>
+        </div>
+
+        <!-- PANEL 5: Photos -->
+        <div class="wiz-panel" id="wiz5">
+          <h3>📸 Show us your space!</h3>
+          <p>Phone photos are totally fine — just snap your outdoor area, any existing plants, and feel free to add inspo images you love!</p>
+
+          <div class="wiz-upload" onclick="document.getElementById('wiz-photos').click()">
+            <div class="u-icon">🌿</div>
+            <h4>Upload photos of your space</h4>
+            <p>Outdoor areas, indoor plants, inspo images<br>JPG, PNG, HEIC · Up to 10 photos</p>
+            <input type="file" id="wiz-photos" multiple accept="image/*" onchange="wizFiles(this)">
+            <div class="file-chips" id="wiz-file-list"></div>
+          </div>
+
+          <div class="wiz-group">
+            <label>Anything else we should know?</label>
+            <textarea placeholder="HOA rules, specific challenges, timing needs, upcoming events — anything goes!"></textarea>
+          </div>
+
+          <div class="wizard-nav">
+            <button class="wiz-back" onclick="wizGo(4)">← Back</button>
+            <span class="wiz-counter">Step 5 of 5</span>
+            <button class="wiz-submit" onclick="wizSubmit()">🌸 Send My Request</button>
+          </div>
+        </div>
+
+        <!-- SUCCESS -->
+        <div class="wiz-success" id="wiz-success">
+          <span class="big-ico">🌺</span>
+          <h3>You're all set, <em>plant girlie!</em></h3>
+          <p>We received your intake form and we're already excited about your space. We'll be in touch within 24 hours!</p>
+          <div class="wiz-next-steps">
+            <div class="wiz-next-step-row">
+              <span class="ns-ico">📧</span>
+              <div><strong>Check your inbox</strong><span>Confirmation email on its way</span></div>
+            </div>
+            <div class="wiz-next-step-row">
+              <span class="ns-ico">⏰</span>
+              <div><strong>We'll reach out within 24 hrs</strong><span>Usually much faster!</span></div>
+            </div>
+            <div class="wiz-next-step-row">
+              <span class="ns-ico">🌿</span>
+              <div><strong>Get your custom plant plan</strong><span>Tailored to your space & vibe</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /wizard-body -->
+    </div><!-- /intake-wizard -->
+  </div><!-- /contact-wrap -->
 </section>
 
 <!-- FOOTER -->
@@ -1621,7 +2264,7 @@
         <li><a href="#testimonials">Reviews</a></li>
         <li><a href="#consultations">Consultations</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="#">Blog</a></li>
+        <li><a href="/education">🌿 Education Hub</a></li>
         <li><a href="#">Instagram</a></li>
       </ul>
     </div>
@@ -1648,58 +2291,85 @@
 </footer>
 
 <script>
-  // Smooth active nav highlight
+  // ── NAV active highlight ──
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-links a');
-
   window.addEventListener('scroll', () => {
     let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--sage-deep)' : '';
-    });
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? 'var(--sage-deep)' : ''; });
   });
 
-  // File upload label update
-  document.querySelectorAll('input[type="file"]').forEach(input => {
-    input.addEventListener('change', e => {
-      const wrap = e.target.closest('.file-upload');
-      if (wrap && e.target.files.length) {
-        wrap.querySelector('p').textContent = `${e.target.files.length} photo${e.target.files.length > 1 ? 's' : ''} selected ✓`;
-      }
-    });
-  });
-
-  // Form submit handler (placeholder)
-  document.querySelector('.form-submit').addEventListener('click', e => {
-    e.preventDefault();
-    const btn = e.currentTarget;
-    btn.textContent = '✓ Request Sent! We\'ll be in touch soon 🌸';
-    btn.style.background = 'var(--sage-light)';
-    btn.style.color = 'var(--sage-deep)';
-    btn.disabled = true;
-  });
-
-  // Intersection observer for subtle fade-in on cards
+  // ── Scroll fade-in ──
   const cards = document.querySelectorAll('.service-card, .step-card, .testi-card, .airbnb-feat, .factor, .value-item');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.style.opacity = '1';
-        entry.target.style.transform = entry.target.style.transform.replace('translateY(20px)', 'translateY(0)') || '';
+        entry.target.style.transform = 'translateY(0)';
         observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
-
   cards.forEach(card => {
     card.style.opacity = '0';
     card.style.transition = 'opacity 0.5s ease, transform 0.5s ease, box-shadow 0.25s, border-color 0.25s';
     card.style.transform = 'translateY(20px)';
     observer.observe(card);
   });
+
+  // ── Intake Wizard ──
+  let wizStep = 1;
+
+  function wizGo(n) {
+    // hide all panels
+    document.querySelectorAll('.wiz-panel').forEach(p => p.classList.remove('active'));
+    // show target
+    const panel = document.getElementById('wiz' + n);
+    if (panel) panel.classList.add('active');
+    // update progress dots
+    for (let i = 1; i <= 5; i++) {
+      const dot = document.getElementById('wp' + i);
+      if (!dot) continue;
+      dot.classList.remove('active', 'done');
+      if (i < n) dot.classList.add('done');
+      if (i === n) dot.classList.add('active');
+    }
+    wizStep = n;
+  }
+
+  function wizCheck(el) {
+    el.classList.toggle('on');
+    el.querySelector('input').checked = el.classList.contains('on');
+  }
+
+  function wizRadio(el, name) {
+    document.querySelectorAll(`[onclick*="'${name}'"]`).forEach(r => r.classList.remove('on'));
+    el.classList.add('on');
+    el.querySelector('input').checked = true;
+  }
+
+  function wizFiles(input) {
+    const list = document.getElementById('wiz-file-list');
+    list.innerHTML = '';
+    Array.from(input.files).forEach(f => {
+      const chip = document.createElement('div');
+      chip.className = 'file-chip';
+      chip.textContent = '📎 ' + (f.name.length > 20 ? f.name.substring(0, 20) + '…' : f.name);
+      list.appendChild(chip);
+    });
+    if (input.files.length) {
+      input.closest('.wiz-upload').querySelector('h4').textContent = `${input.files.length} photo${input.files.length > 1 ? 's' : ''} selected ✓`;
+    }
+  }
+
+  function wizSubmit() {
+    document.querySelectorAll('.wiz-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.wiz-step, [id^="wp"]').forEach(s => s.classList.add('done'));
+    document.getElementById('wiz-success').style.display = 'block';
+    // Scroll the wizard into view
+    document.getElementById('wiz-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 </script>
 </body>
 </html>

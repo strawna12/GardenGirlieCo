@@ -1,7 +1,1263 @@
-[build]
-builder = "NIXPACKS"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Client Intake Form | Garden Girlies Co.</title>
+<meta name="description" content="Start your garden journey with Garden Girlies Co. Fill out our new client intake form and we'll create a custom plant and garden plan just for you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blush: #F2C4C0;
+  --blush-light: #FAE8E6;
+  --blush-deep: #E8A49F;
+  --sage: #8FAF85;
+  --sage-light: #C5D9BE;
+  --sage-deep: #5F8054;
+  --cream: #FAF6EE;
+  --butter: #F5E6A3;
+  --butter-deep: #EDD86A;
+  --coral: #F0876A;
+  --coral-light: #F9BEA8;
+  --brown: #6B4C3B;
+  --text: #3D2B1F;
+  --text-muted: #7A5C4E;
+  --white: #FFFDF9;
+  --shadow: rgba(61,43,31,0.10);
+}
 
-[deploy]
-startCommand = "npm start"
-restartPolicyType = "ON_FAILURE"
-restartPolicyMaxRetries = 10
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--cream);
+  min-height: 100vh;
+}
+
+/* NAV */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  background: rgba(250,246,238,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--blush);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.3rem;
+  color: var(--sage-deep);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--coral); }
+.nav-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--sage-deep); }
+
+/* HERO */
+.form-hero {
+  background: linear-gradient(135deg, var(--blush-light) 0%, var(--cream) 40%, var(--sage-light) 100%);
+  padding: 60px 48px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.form-hero::before {
+  content: '🌸 🌿 🌺 🦋 🌱 🌸 🌿 🌺';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  font-size: 2rem;
+  letter-spacing: 20px;
+  opacity: 0.15;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.form-hero-tag {
+  display: inline-block;
+  background: var(--white);
+  border: 1.5px solid var(--blush);
+  border-radius: 50px;
+  padding: 7px 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--brown);
+  margin-bottom: 20px;
+  letter-spacing: 0.05em;
+}
+.form-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.form-hero h1 em { font-style: italic; color: var(--coral); }
+.form-hero p {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 560px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* PROGRESS BAR */
+.progress-wrap {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+.progress-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--white);
+  border-radius: 20px;
+  padding: 20px 32px;
+  box-shadow: 0 8px 32px var(--shadow);
+  transform: translateY(28px);
+}
+.prog-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.prog-step:not(.active) { opacity: 0.45; }
+.prog-dot {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--sage-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.2s;
+}
+.prog-step.active .prog-dot {
+  background: var(--sage-deep);
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(95,128,84,0.3);
+}
+.prog-step.done .prog-dot { background: var(--coral); }
+.prog-step span {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+.prog-line {
+  flex: 0 0 32px;
+  height: 2px;
+  background: var(--sage-light);
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+/* MAIN FORM AREA */
+.form-outer {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 72px 24px 80px;
+}
+
+.form-step {
+  display: none;
+  animation: stepIn 0.4s ease;
+}
+.form-step.active { display: block; }
+
+@keyframes stepIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.step-header {
+  margin-bottom: 36px;
+}
+.step-header .emoji { font-size: 2.8rem; display: block; margin-bottom: 12px; }
+.step-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.step-header h2 em { font-style: italic; color: var(--coral); }
+.step-header p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* FORM FIELDS */
+.form-card {
+  background: var(--white);
+  border-radius: 28px;
+  padding: 40px 36px;
+  box-shadow: 0 4px 24px var(--shadow);
+  margin-bottom: 24px;
+}
+.form-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 20px;
+}
+.form-group:last-child { margin-bottom: 0; }
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.form-group label .req { color: var(--coral); }
+.form-group label .hint {
+  font-weight: 300;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  margin-left: 4px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: var(--cream);
+  border: 1.5px solid rgba(143,175,133,0.25);
+  border-radius: 14px;
+  padding: 13px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--sage);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(143,175,133,0.15);
+}
+.form-group textarea { resize: vertical; min-height: 90px; }
+.form-group select { appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237A5C4E' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+
+/* CHECKBOX / RADIO GRIDS */
+.check-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+}
+.check-grid-2 { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cream);
+  border: 1.5px solid rgba(143,175,133,0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.check-item:hover { border-color: var(--sage-light); background: var(--blush-light); }
+.check-item input { display: none; }
+.check-item.checked {
+  background: #e4f0df;
+  border-color: var(--sage);
+}
+.check-box {
+  width: 20px; height: 20px;
+  border: 2px solid var(--sage-light);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  font-size: 0.7rem;
+}
+.check-item.checked .check-box {
+  background: var(--sage-deep);
+  border-color: var(--sage-deep);
+  color: white;
+}
+.check-item span { font-size: 0.87rem; font-weight: 400; line-height: 1.3; }
+
+/* RADIO ITEMS */
+.radio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.radio-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: var(--cream);
+  border: 2px solid rgba(143,175,133,0.2);
+  border-radius: 16px;
+  padding: 18px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  user-select: none;
+}
+.radio-item:hover { border-color: var(--sage-light); transform: translateY(-2px); }
+.radio-item input { display: none; }
+.radio-item.selected {
+  background: #e4f0df;
+  border-color: var(--sage-deep);
+  box-shadow: 0 4px 14px rgba(95,128,84,0.18);
+}
+.radio-item .r-icon { font-size: 1.8rem; }
+.radio-item .r-label { font-size: 0.83rem; font-weight: 500; color: var(--text); }
+.radio-item .r-sub { font-size: 0.75rem; color: var(--text-muted); font-weight: 300; }
+
+/* SLIDER */
+.slider-wrap { padding: 8px 0 4px; }
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 10px;
+  background: linear-gradient(to right, var(--sage-deep) 0%, var(--sage-deep) var(--val, 50%), var(--sage-light) var(--val, 50%), var(--sage-light) 100%);
+  outline: none;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 3px solid var(--sage-deep);
+  box-shadow: 0 2px 8px rgba(95,128,84,0.3);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+.slider-value {
+  text-align: center;
+  margin-top: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--sage-deep);
+}
+
+/* FILE UPLOAD */
+.file-upload-zone {
+  background: var(--blush-light);
+  border: 2px dashed var(--blush-deep);
+  border-radius: 18px;
+  padding: 36px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.file-upload-zone:hover { background: var(--blush); border-color: var(--coral); }
+.file-upload-zone .upload-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.file-upload-zone h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
+.file-upload-zone p { font-size: 0.82rem; color: var(--text-muted); font-weight: 300; line-height: 1.6; }
+.file-upload-zone input { display: none; }
+.file-upload-zone .file-list { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.file-chip {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  color: var(--sage-deep);
+  font-weight: 500;
+  border: 1px solid var(--sage-light);
+}
+
+/* NAVIGATION BUTTONS */
+.form-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  gap: 16px;
+}
+.btn-back {
+  background: transparent;
+  border: 2px solid var(--sage-light);
+  color: var(--sage-deep);
+  padding: 13px 28px;
+  border-radius: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+.btn-back:hover { background: var(--sage-light); }
+.btn-next {
+  background: var(--sage-deep);
+  border: none;
+  color: var(--white);
+  padding: 14px 36px;
+  border-radius: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(95,128,84,0.3);
+}
+.btn-next:hover { background: var(--brown); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(95,128,84,0.3); }
+.btn-submit {
+  background: var(--coral);
+  border: none;
+  color: var(--white);
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(240,135,106,0.35);
+}
+.btn-submit:hover { background: var(--brown); transform: translateY(-2px); }
+
+/* STEP COUNTER */
+.step-counter {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+/* SUCCESS */
+.success-screen {
+  display: none;
+  text-align: center;
+  padding: 80px 24px;
+  animation: stepIn 0.5s ease;
+}
+.success-screen .big-icon { font-size: 5rem; margin-bottom: 24px; display: block; }
+.success-screen h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.success-screen h2 em { font-style: italic; color: var(--coral); }
+.success-screen p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin: 0 auto 32px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+.success-details {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 32px;
+  max-width: 440px;
+  margin: 0 auto 32px;
+  box-shadow: 0 4px 20px var(--shadow);
+}
+.success-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--blush-light);
+  text-align: left;
+}
+.success-detail-row:last-child { border-bottom: none; }
+.success-detail-row .s-icon { font-size: 1.2rem; }
+.success-detail-row strong { display: block; font-size: 0.85rem; font-weight: 600; }
+.success-detail-row span { font-size: 0.82rem; color: var(--text-muted); font-weight: 300; }
+.btn-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sage-deep);
+  color: var(--white);
+  padding: 14px 32px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.btn-home:hover { background: var(--brown); transform: translateY(-2px); }
+
+/* TIPS CARD */
+.tip-card {
+  background: linear-gradient(135deg, var(--sage-light) 0%, var(--blush-light) 100%);
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.tip-card .tip-icon { font-size: 1.5rem; flex-shrink: 0; }
+.tip-card p { font-size: 0.87rem; color: var(--brown); line-height: 1.65; font-weight: 300; }
+.tip-card strong { font-weight: 600; }
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  nav { padding: 14px 20px; }
+  .form-hero { padding: 40px 20px 0; }
+  .progress-steps { padding: 16px 16px; gap: 4px; flex-wrap: wrap; }
+  .prog-line { flex: 0 0 16px; }
+  .prog-step span { font-size: 0.65rem; }
+  .form-outer { padding: 60px 16px 60px; }
+  .form-card { padding: 28px 20px; }
+  .form-row, .form-row-3 { grid-template-columns: 1fr; }
+  .radio-grid { grid-template-columns: repeat(2, 1fr); }
+  .check-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Garden Girlies <span>Co.</span></a>
+  <a href="/" class="nav-back">← Back to Website</a>
+</nav>
+
+<div class="form-hero">
+  <div class="form-hero-tag">🌱 New Client Intake</div>
+  <h1>Let's get to know<br><em>your space</em> 🌸</h1>
+  <p>Tell us everything! The more details you share, the better we can match you with plants and services that actually work for your lifestyle, home, and vibe.</p>
+  <div class="progress-wrap">
+    <div class="progress-steps">
+      <div class="prog-step active" data-step="1" onclick="goToStep(1)">
+        <div class="prog-dot">👤</div>
+        <span>About You</span>
+      </div>
+      <div class="prog-line"></div>
+      <div class="prog-step" data-step="2" onclick="goToStep(2)">
+        <div class="prog-dot">🏡</div>
+        <span>Your Space</span>
+      </div>
+      <div class="prog-line"></div>
+      <div class="prog-step" data-step="3" onclick="goToStep(3)">
+        <div class="prog-dot">🌿</div>
+        <span>Plant Life</span>
+      </div>
+      <div class="prog-line"></div>
+      <div class="prog-step" data-step="4" onclick="goToStep(4)">
+        <div class="prog-dot">✨</div>
+        <span>Services</span>
+      </div>
+      <div class="prog-line"></div>
+      <div class="prog-step" data-step="5" onclick="goToStep(5)">
+        <div class="prog-dot">📸</div>
+        <span>Photos</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-outer">
+
+  <!-- STEP 1: ABOUT YOU -->
+  <div class="form-step active" id="step-1">
+    <div class="step-header">
+      <span class="emoji">👋</span>
+      <h2>Nice to meet you, <em>future plant girlie!</em></h2>
+      <p>Let's start with the basics. We'll use this info to reach out and set up your consult.</p>
+    </div>
+    <div class="form-card">
+      <h3>📋 Contact Information</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name <span class="req">*</span></label>
+          <input type="text" placeholder="Your first name" id="fname">
+        </div>
+        <div class="form-group">
+          <label>Last Name <span class="req">*</span></label>
+          <input type="text" placeholder="Your last name" id="lname">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" placeholder="you@email.com" id="email">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="(727) 555-0000" id="phone">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>City <span class="req">*</span></label>
+          <input type="text" placeholder="St. Petersburg" id="city">
+        </div>
+        <div class="form-group">
+          <label>Zip Code <span class="req">*</span></label>
+          <input type="text" placeholder="33701" id="zip">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>How did you hear about us? 🌸</label>
+        <select id="referral">
+          <option value="">Select one...</option>
+          <option>Instagram</option>
+          <option>Facebook</option>
+          <option>TikTok</option>
+          <option>Google Search</option>
+          <option>Friend or family referral</option>
+          <option>Nextdoor</option>
+          <option>Airbnb community</option>
+          <option>Local event or market</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🌿</div>
+      <p><strong>Quick & easy!</strong> This form takes about 5–7 minutes. We'll review your answers and reach out within 24 hours to chat about your garden goals.</p>
+    </div>
+    <div class="form-nav">
+      <span class="step-counter">Step 1 of 5</span>
+      <button class="btn-next" onclick="nextStep(1)">Next: Your Space →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: YOUR SPACE -->
+  <div class="form-step" id="step-2">
+    <div class="step-header">
+      <span class="emoji">🏡</span>
+      <h2>Tell us about <em>your space</em></h2>
+      <p>Every garden is different — a tiny balcony needs totally different love than a big backyard. Help us understand what we're working with!</p>
+    </div>
+    <div class="form-card">
+      <h3>🏠 Property Type</h3>
+      <div class="radio-grid">
+        <label class="radio-item" onclick="selectRadio(this, 'property')">
+          <input type="radio" name="property" value="house">
+          <span class="r-icon">🏡</span>
+          <span class="r-label">Single Family Home</span>
+          <span class="r-sub">Own or rent</span>
+        </label>
+        <label class="radio-item" onclick="selectRadio(this, 'property')">
+          <input type="radio" name="property" value="condo">
+          <span class="r-icon">🏢</span>
+          <span class="r-label">Condo / Apt</span>
+          <span class="r-sub">Balcony or patio</span>
+        </label>
+        <label class="radio-item" onclick="selectRadio(this, 'property')">
+          <input type="radio" name="property" value="townhouse">
+          <span class="r-icon">🏘️</span>
+          <span class="r-label">Townhouse</span>
+          <span class="r-sub">Own or rent</span>
+        </label>
+        <label class="radio-item" onclick="selectRadio(this, 'property')">
+          <input type="radio" name="property" value="airbnb">
+          <span class="r-icon">🛎️</span>
+          <span class="r-label">Airbnb / STR</span>
+          <span class="r-sub">Rental property</span>
+        </label>
+        <label class="radio-item" onclick="selectRadio(this, 'property')">
+          <input type="radio" name="property" value="commercial">
+          <span class="r-icon">🏪</span>
+          <span class="r-label">Commercial</span>
+          <span class="r-sub">Business/Office</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>📐 Space Details</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Do you own or rent?</label>
+          <select>
+            <option value="">Select...</option>
+            <option>I own my home</option>
+            <option>I rent — landlord is flexible</option>
+            <option>I rent — no permanent changes</option>
+            <option>Short-term rental property I manage</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Approximate outdoor space size</label>
+          <select>
+            <option value="">Select...</option>
+            <option>Tiny (balcony / small patio, under 100 sq ft)</option>
+            <option>Small (100–300 sq ft)</option>
+            <option>Medium (300–600 sq ft)</option>
+            <option>Large (600–1000 sq ft)</option>
+            <option>Very large (1000+ sq ft)</option>
+            <option>Not sure — we can assess!</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Which areas do you want to address? <span class="hint">(check all that apply)</span></label>
+        <div class="check-grid" style="margin-top:8px;">
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box">✓</div><span>Front yard / curb appeal</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box">✓</div><span>Back yard</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box">✓</div><span>Side yard</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box">✓</div><span>Patio / lanai</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box">✓</div><span>Balcony</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box">✓</div><span>Driveway / entry</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box">✓</div><span>Pool area</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox"><div class="check-box">✓</div><span>Indoor spaces</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>☀️ Sun & Conditions</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Overall sun exposure</label>
+          <select>
+            <option value="">Select...</option>
+            <option>Full sun (6+ hrs direct sun/day)</option>
+            <option>Partial sun (3–6 hrs/day)</option>
+            <option>Partial shade (1–3 hrs/day)</option>
+            <option>Full shade (under 1 hr/day)</option>
+            <option>Mixed — varies by area</option>
+            <option>Not sure!</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Do you have an irrigation system?</label>
+          <select>
+            <option value="">Select...</option>
+            <option>Yes — full irrigation system</option>
+            <option>Yes — partial / some zones</option>
+            <option>No — I hand water</option>
+            <option>No irrigation and I forget often 😅</option>
+            <option>Not sure</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Soil situation <span class="hint">(if known)</span></label>
+          <select>
+            <option value="">Select...</option>
+            <option>Sandy Florida soil</option>
+            <option>Clay-heavy</option>
+            <option>Amended / good quality</option>
+            <option>Container / raised bed only</option>
+            <option>Not sure — help!</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>HOA restrictions?</label>
+          <select>
+            <option value="">Select...</option>
+            <option>No HOA</option>
+            <option>HOA — moderate restrictions</option>
+            <option>HOA — strict restrictions</option>
+            <option>Not sure of the rules</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Describe your current space <span class="hint">(what's there now?)</span></label>
+        <textarea placeholder="e.g. 'Currently just grass and a few scraggly bushes. Very sunny, gets afternoon shade from the house. Concrete patio on the side...'"></textarea>
+      </div>
+    </div>
+    <div class="form-nav">
+      <button class="btn-back" onclick="prevStep(2)">← Back</button>
+      <span class="step-counter">Step 2 of 5</span>
+      <button class="btn-next" onclick="nextStep(2)">Next: Plant Life →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: PLANT LIFE -->
+  <div class="form-step" id="step-3">
+    <div class="step-header">
+      <span class="emoji">🌿</span>
+      <h2>Let's talk <em>plant life</em></h2>
+      <p>We want to know your vibe, your habits (no judgment!), and what you want your outdoor space to feel like.</p>
+    </div>
+
+    <div class="form-card">
+      <h3>💚 Your Experience Level</h3>
+      <div class="radio-grid">
+        <label class="radio-item" onclick="selectRadio(this, 'xp')">
+          <input type="radio" name="xp"><span class="r-icon">🪴</span>
+          <span class="r-label">Total Beginner</span>
+          <span class="r-sub">I've killed cacti</span>
+        </label>
+        <label class="radio-item" onclick="selectRadio(this, 'xp')">
+          <input type="radio" name="xp"><span class="r-icon">🌱</span>
+          <span class="r-label">Some Experience</span>
+          <span class="r-sub">Hit & miss results</span>
+        </label>
+        <label class="radio-item" onclick="selectRadio(this, 'xp')">
+          <input type="radio" name="xp"><span class="r-icon">🌿</span>
+          <span class="r-label">Comfortable</span>
+          <span class="r-sub">I have some wins</span>
+        </label>
+        <label class="radio-item" onclick="selectRadio(this, 'xp')">
+          <input type="radio" name="xp"><span class="r-icon">🌺</span>
+          <span class="r-label">Plant Enthusiast</span>
+          <span class="r-sub">I just want help</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>💧 Watering Honesty Check</h3>
+      <div class="form-group">
+        <label>How often are you realistically willing to water?</label>
+        <div class="slider-wrap">
+          <input type="range" min="1" max="5" value="3" id="waterSlider"
+            oninput="updateSlider(this, 'waterLabel', ['Once a week or less','A few times a week','Every other day','Daily is fine','I love watering!'])">
+          <div class="slider-labels">
+            <span>Set it & forget it</span>
+            <span>Water me daily</span>
+          </div>
+          <div class="slider-value" id="waterLabel">A few times a week</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>🎨 Your Aesthetic Vibe</h3>
+      <p style="font-size:0.87rem;color:var(--text-muted);margin-bottom:16px;font-weight:300;">Pick all that resonate — we'll find your perfect plant personality!</p>
+      <div class="check-grid">
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🌸 Cottagecore / romantic</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🌴 Tropical / lush</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🪨 Minimalist / zen</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🌻 Colorful & bold</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🌿 Lush & green</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🦋 Pollinator garden</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🌾 Native / wild look</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🍃 Edible / herbs</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🏖️ Coastal / beachy</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🌵 Low-water / hardy</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>🐾 Household Details</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Do you have pets?</label>
+          <select>
+            <option value="">Select...</option>
+            <option>No pets</option>
+            <option>Dogs (need pet-safe plants)</option>
+            <option>Cats (indoor/outdoor)</option>
+            <option>Both dogs & cats</option>
+            <option>Other pets</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Young children at home?</label>
+          <select>
+            <option value="">Select...</option>
+            <option>No young children</option>
+            <option>Yes — need child-safe plants</option>
+            <option>Visiting grandchildren/nieces/nephews</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Any plants you love? <span class="hint">(specific plants, colors, or types)</span></label>
+        <textarea placeholder="e.g. 'I love bougainvillea and big tropical leaves! I'd love some color — pinks and corals. Not a fan of anything too spiky...'"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Any plants you dislike or are allergic to?</label>
+        <input type="text" placeholder="e.g. strong fragrance, certain allergens, anything with thorns...">
+      </div>
+    </div>
+
+    <div class="form-nav">
+      <button class="btn-back" onclick="prevStep(3)">← Back</button>
+      <span class="step-counter">Step 3 of 5</span>
+      <button class="btn-next" onclick="nextStep(3)">Next: Services →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: SERVICES -->
+  <div class="form-step" id="step-4">
+    <div class="step-header">
+      <span class="emoji">✨</span>
+      <h2>What can we <em>do for you?</em></h2>
+      <p>Select all the services you're curious about — no commitment yet, just curiosity! We'll help you figure out exactly what makes sense.</p>
+    </div>
+
+    <div class="form-card">
+      <h3>🌿 Services I'm Interested In</h3>
+      <div class="check-grid">
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🪴 Container gardening</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>✂️ Garden maintenance</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🏡 Airbnb outdoor styling</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🌿 Yard / patio design</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🌞 Plant recommendations</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>💧 Vacation watering</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🌱 Indoor plant care</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🛒 Plant shopping help</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🍂 Seasonal refresh</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🦋 Pollinator garden</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🏠 Rental glow-up</span>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox"><div class="check-box">✓</div><span>🎓 Teach me to garden</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>📅 Timing & Budget</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>When do you want to get started?</label>
+          <select>
+            <option value="">Select...</option>
+            <option>ASAP — I'm ready!</option>
+            <option>Within the next 2–4 weeks</option>
+            <option>Next 1–2 months</option>
+            <option>Just exploring for now</option>
+            <option>Specific date / season</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Rough budget range <span class="hint">(ok to estimate!)</span></label>
+          <select>
+            <option value="">Select...</option>
+            <option>Under $200 (consultation / small add-on)</option>
+            <option>$200 – $500</option>
+            <option>$500 – $1,000</option>
+            <option>$1,000 – $2,500</option>
+            <option>$2,500+ (full design or ongoing plan)</option>
+            <option>Not sure — need guidance</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Preferred service frequency</label>
+        <div class="radio-grid" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); margin-top:8px;">
+          <label class="radio-item" onclick="selectRadio(this, 'freq')">
+            <input type="radio" name="freq"><span class="r-icon">1️⃣</span>
+            <span class="r-label">One-time</span>
+          </label>
+          <label class="radio-item" onclick="selectRadio(this, 'freq')">
+            <input type="radio" name="freq"><span class="r-icon">📅</span>
+            <span class="r-label">Monthly</span>
+          </label>
+          <label class="radio-item" onclick="selectRadio(this, 'freq')">
+            <input type="radio" name="freq"><span class="r-icon">🔄</span>
+            <span class="r-label">Bi-weekly</span>
+          </label>
+          <label class="radio-item" onclick="selectRadio(this, 'freq')">
+            <input type="radio" name="freq"><span class="r-icon">🗓️</span>
+            <span class="r-label">Weekly</span>
+          </label>
+          <label class="radio-item" onclick="selectRadio(this, 'freq')">
+            <input type="radio" name="freq"><span class="r-icon">🤷</span>
+            <span class="r-label">Not sure yet</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>💬 Goals & Dreams</h3>
+      <div class="form-group">
+        <label>What's your #1 goal for your outdoor space?</label>
+        <textarea placeholder="Dream big! e.g. 'I want my patio to feel like a little tropical escape. I spend mornings outside with coffee and want it to feel cozy and lush but not require a ton of upkeep...'"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Anything else we should know?</label>
+        <textarea placeholder="HOA rules, specific challenges, plants that haven't worked before, timing needs, upcoming events — anything goes!"></textarea>
+      </div>
+    </div>
+
+    <div class="form-nav">
+      <button class="btn-back" onclick="prevStep(4)">← Back</button>
+      <span class="step-counter">Step 4 of 5</span>
+      <button class="btn-next" onclick="nextStep(4)">Next: Add Photos →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: PHOTOS -->
+  <div class="form-step" id="step-5">
+    <div class="step-header">
+      <span class="emoji">📸</span>
+      <h2>Show us <em>your space!</em></h2>
+      <p>Photos are incredibly helpful for us to understand your space and start thinking about plant placement, light exposure, and design. Don't stress about quality — phone photos are totally fine!</p>
+    </div>
+
+    <div class="form-card">
+      <h3>📷 Upload Space Photos <span style="font-size:0.82rem;font-weight:300;color:var(--text-muted);">(optional but super helpful!)</span></h3>
+      <div class="file-upload-zone" onclick="document.getElementById('spacePhotos').click()">
+        <div class="upload-icon">🌿</div>
+        <h4>Click to upload photos of your outdoor space</h4>
+        <p>Front yard, back yard, patio, balcony, containers — show us everything!<br>JPG, PNG, HEIC · Up to 10 photos · Max 10MB each</p>
+        <input type="file" id="spacePhotos" multiple accept="image/*" onchange="handleFiles(this, 'spaceFileList')">
+        <div class="file-list" id="spaceFileList"></div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>🌱 Indoor Plant Photos <span style="font-size:0.82rem;font-weight:300;color:var(--text-muted);">(if requesting indoor care)</span></h3>
+      <div class="file-upload-zone" onclick="document.getElementById('indoorPhotos').click()">
+        <div class="upload-icon">🪴</div>
+        <h4>Upload photos of your indoor plants</h4>
+        <p>Close-ups of any problem areas, overall shelfies, plant collections — we love to see them!<br>JPG, PNG, HEIC · Up to 10 photos</p>
+        <input type="file" id="indoorPhotos" multiple accept="image/*" onchange="handleFiles(this, 'indoorFileList')">
+        <div class="file-list" id="indoorFileList"></div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>✨ Inspo Photos <span style="font-size:0.82rem;font-weight:300;color:var(--text-muted);">(totally optional!)</span></h3>
+      <div class="file-upload-zone" onclick="document.getElementById('inspoPhotos').click()">
+        <div class="upload-icon">💫</div>
+        <h4>Got Pinterest saves or Instagram inspo?</h4>
+        <p>Screenshots of gardens, patios, or plant setups you love. Helps us nail your vibe perfectly.</p>
+        <input type="file" id="inspoPhotos" multiple accept="image/*" onchange="handleFiles(this, 'inspoFileList')">
+        <div class="file-list" id="inspoFileList"></div>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">💡</div>
+      <p><strong>Photo tips:</strong> Natural light photos work best. Try to capture the full area, including where the sun hits, any existing plants, and structures like fences or overhead cover. Morning shots often show light exposure best!</p>
+    </div>
+
+    <div class="form-nav">
+      <button class="btn-back" onclick="prevStep(5)">← Back</button>
+      <span class="step-counter">Step 5 of 5</span>
+      <button class="btn-submit" onclick="submitForm()">🌸 Submit My Intake Form</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS SCREEN -->
+  <div class="success-screen" id="success">
+    <span class="big-icon">🌺</span>
+    <h2>You're all set, <em>plant girlie!</em></h2>
+    <p>We've received your intake form and we're already excited about your space. Here's what happens next:</p>
+    <div class="success-details">
+      <div class="success-detail-row">
+        <span class="s-icon">📧</span>
+        <div>
+          <strong>Check your email</strong>
+          <span>A confirmation is on its way to your inbox right now.</span>
+        </div>
+      </div>
+      <div class="success-detail-row">
+        <span class="s-icon">⏰</span>
+        <div>
+          <strong>We'll reach out within 24 hours</strong>
+          <span>Usually much faster — we love this part!</span>
+        </div>
+      </div>
+      <div class="success-detail-row">
+        <span class="s-icon">🗓️</span>
+        <div>
+          <strong>Schedule your consult</strong>
+          <span>We'll find a time that works and chat about your goals.</span>
+        </div>
+      </div>
+      <div class="success-detail-row">
+        <span class="s-icon">🌿</span>
+        <div>
+          <strong>Get your custom plant plan</strong>
+          <span>Tailored to your space, lifestyle, and vibe.</span>
+        </div>
+      </div>
+    </div>
+    <a href="/" class="btn-home">🌸 Back to Garden Girlies Co.</a>
+  </div>
+
+</div>
+
+<script>
+let currentStep = 1;
+const totalSteps = 5;
+
+function goToStep(n) {
+  document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.prog-step').forEach((s, i) => {
+    s.classList.remove('active', 'done');
+    if (i + 1 < n) s.classList.add('done');
+    if (i + 1 === n) s.classList.add('active');
+  });
+  const el = document.getElementById('step-' + n);
+  if (el) el.classList.add('active');
+  currentStep = n;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextStep(from) {
+  if (from < totalSteps) goToStep(from + 1);
+}
+
+function prevStep(from) {
+  if (from > 1) goToStep(from - 1);
+}
+
+function submitForm() {
+  document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.prog-step').forEach(s => s.classList.add('done'));
+  document.getElementById('success').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function selectRadio(el, name) {
+  document.querySelectorAll(`[onclick*="${name}"]`).forEach(r => r.classList.remove('selected'));
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  el.querySelector('input').checked = el.classList.contains('checked');
+}
+
+function updateSlider(input, labelId, labels) {
+  const val = parseInt(input.value);
+  const pct = ((val - 1) / (input.max - 1)) * 100;
+  input.style.setProperty('--val', pct + '%');
+  document.getElementById(labelId).textContent = labels[val - 1];
+}
+
+// Init slider
+const ws = document.getElementById('waterSlider');
+if (ws) updateSlider(ws, 'waterLabel', ['Once a week or less','A few times a week','Every other day','Daily is fine','I love watering!']);
+
+function handleFiles(input, listId) {
+  const list = document.getElementById(listId);
+  list.innerHTML = '';
+  Array.from(input.files).forEach(f => {
+    const chip = document.createElement('div');
+    chip.className = 'file-chip';
+    chip.textContent = '📎 ' + f.name.substring(0, 22) + (f.name.length > 22 ? '…' : '');
+    list.appendChild(chip);
+  });
+  if (input.files.length) {
+    const wrap = input.closest('.file-upload-zone');
+    wrap.querySelector('h4').textContent = `${input.files.length} photo${input.files.length > 1 ? 's' : ''} selected ✓`;
+  }
+}
+</script>
+
+</body>
+</html>
